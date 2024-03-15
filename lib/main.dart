@@ -18,20 +18,31 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   Future<void> getData() async {
+
 try {
-  final response = await http.get(Uri.parse(url));
+  final response = await http.get(Uri.parse(url)).timeout(Duration(seconds: 7));
 
   user = [jsonDecode(response.body)];
   print(user[0]['info']['version']);
-
   Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=> Homepage()));
-}
-catch(e) {
-  print('error');
+
+}catch(e) {
+ showDialog(context: context, builder: (context){
+   return AlertDialog(
+     title: Text('Message'),
+     content: Text('No Internet Connection'),
+     actions: [
+       TextButton(onPressed: (){
+         getData();
+         Navigator.pop(context);
+       }, child: Text('Retry'))
+     ],
+   );
+ });
 }
 
 
-  }
+ }
   @override
   void initState() {
     getData();
