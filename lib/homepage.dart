@@ -74,6 +74,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
           //data of the user
+
             Container(
               margin: EdgeInsets.all(20),
               padding: EdgeInsets.all(20),
